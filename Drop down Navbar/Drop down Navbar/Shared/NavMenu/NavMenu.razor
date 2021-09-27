@@ -1,0 +1,79 @@
+﻿<header>
+    <nav>
+        <div>
+            <button >Dashboard</button>
+            <button >Account</button>
+            <button >Gamer Profile</button>
+            <button >Tests</button>
+            <button >Shop</button>
+            <button @onmouseover="@(() => NavMouseOver(NavSection.Support))">Support</button>
+        </div>
+    </nav>
+</header>
+
+@code {
+    List<string> NavButtonSupportList = new() {"Tickets", "Legal", "FAQ" };
+    NavSection active = NavSection.Dashboard;
+
+    private void NavMouseOver(NavSection section)
+    {
+        switch (section)
+        {
+            case NavSection.Dashboard:
+                break;
+            case NavSection.Account:
+                break;
+            case NavSection.GameProfile:
+                break;
+            case NavSection.Tests:
+                break;
+            case NavSection.Shop:
+                break;
+            case NavSection.Support:
+                foreach (var item in collection)
+                {
+
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void OnClick(NavSection section)
+    {
+        switch (section)
+        {
+            case NavSection.Dashboard:
+                active = NavSection.Dashboard;
+                break;
+            case NavSection.Account:
+                active = NavSection.Account;
+                break;
+            case NavSection.GameProfile:
+                active = NavSection.GameProfile;
+                break;
+            case NavSection.Tests:
+                active = NavSection.Tests;
+                break;
+            case NavSection.Shop:
+                active = NavSection.Shop;
+                break;
+            case NavSection.Support:
+                active = NavSection.Support;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public enum NavSection
+    {
+        Dashboard,
+        Account,
+        GameProfile,
+        Tests,
+        Shop,
+        Support
+    }
+}

@@ -1,0 +1,27 @@
+header {
+    height: 100%;
+    background-color: black; /***/
+    width: 100%;
+}
+
+nav {
+    height: 100%;
+    width: 100%; /***/
+}
+
+    nav div {
+        gap: 14px;
+        width: 100%;
+    }
+
+        nav div button {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            position: relative;
+        }
+
+            nav div button:hover {
+                color: aqua;
+            }
