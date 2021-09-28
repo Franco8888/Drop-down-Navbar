@@ -1,0 +1,155 @@
+﻿@inject NavigationManager navigationManager
+
+<style>
+    .nav-button-active-background {
+        background-color: #38aecc;
+    }
+
+    .nav-button-background {
+        background-color: #022F40;
+    }
+</style>
+
+<header>
+    <nav>
+        <div>
+            @foreach (var navButton in MainNavButtons)
+            {
+                <div class="dropdown">
+                    <button class="dropbtn @navButton.StyleClassString" @onclick="@(() => OnButtonClicked(navButton, navButton.ButtonRoute))">@navButton.ButtonString</button>
+                    <div class="dropdown-content">
+                        @foreach (var button in navButton.SubSection)
+                        {
+                            <button class="@button.StyleClassString" @onclick="@(() => OnButtonClicked(navButton, button.ButtonRoute, button.ButtonString))">@button.ButtonString</button>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    </nav>
+</header>
+
+@code {
+
+    List<NavButton> MainNavButtons = new()
+    {
+        new NavButton("Dashboard", "/dashboard", NavDashboardSection, NavSection.Dashboard),
+        new NavButton("Account", "/account", NavAccountSection, NavSection.Account),
+        new NavButton("Gamer Profile", "/gamerprofile", NavGamerProfileSection, NavSection.GameProfile),
+        new NavButton("Tests", "/tests", NavTestSection, NavSection.Tests),
+        new NavButton("Shop", "/shop", NavShopSection, NavSection.Shop),
+        new NavButton("Support", "/support/ticekts", NavSupportSection, NavSection.Support),
+    };
+
+    static List<NavButton> NavDashboardSection = new();
+
+    static List<NavButton> NavAccountSection = new()
+    {
+        new NavButton("Personel Detials", "/account/detials"),
+        new NavButton("Achievements", "/account/achievements"),
+        new NavButton("Activity", "/account/activity"),
+        new NavButton("Referrals", "/account/referrals"),
+    };
+
+    static List<NavButton> NavGamerProfileSection = new()
+    {
+        new NavButton("My Game Profile", "/profile"),
+        new NavButton("My Game Genres", "/profile/genres"),
+        new NavButton("My Game Devices", "/profile/devices"),
+    };
+
+    static List<NavButton> NavTestSection = new()
+    {
+        new NavButton("Available Tests", "/tests"),
+        new NavButton("Test History", "/tests/history"),
+    };
+    static List<NavButton> NavShopSection = new()
+    {
+        new NavButton("Browse", "/shop"),
+        new NavButton("Address Book", "/shop/addressbook"),
+        new NavButton("Order History", "/shop/orderhistory"),
+    };
+    static List<NavButton> NavSupportSection = new()
+    {
+        new NavButton("Tickets", "/support/tickets"),
+        new NavButton("Legal", "/support/legal"),
+        new NavButton("FAQ", "/support/faq"),
+    };
+
+    NavSection sectionActive = NavSection.Dashboard;
+
+    private void OnButtonClicked(NavButton mainButtonPressed, string route, string buttonString = "")
+    {
+        foreach (var mainbtn in MainNavButtons)
+        {
+            if(mainbtn.ButtonString == mainButtonPressed.ButtonString)
+            {
+                mainbtn.StyleClassString = ButtonActiveStyle.active;
+            }
+            else
+            {
+                mainbtn.StyleClassString = ButtonActiveStyle.normal;
+            }
+
+            // Making sub button active
+            foreach (var subButton in mainbtn.SubSection)
+            {
+                if (subButton.ButtonString == buttonString)
+                {
+                    subButton.StyleClassString = ButtonActiveStyle.active;
+                }
+                else
+                {
+                    subButton.StyleClassString = ButtonActiveStyle.normal;
+                }
+            }
+        }
+
+        GoToPage(route);
+
+    }
+
+    private void GoToPage(string route)
+    {
+        navigationManager.NavigateTo(route);
+    }
+
+    public class NavButton
+    {
+        public string ButtonString { get; set; }
+
+        public string ButtonRoute { get; set; }
+
+        public NavSection Section { get; set; } = NavSection.Dashboard;
+
+        public List<NavButton> SubSection { get; set; } = new List<NavButton>();
+
+        public string StyleClassString { get; set; } = ButtonActiveStyle.normal;
+
+        public NavButton(string buttonString, string buttonRoute, List<NavButton> subSection = null, NavSection section = NavSection.Dashboard)
+        {
+            ButtonString = buttonString;
+            ButtonRoute = buttonRoute;
+            SubSection = subSection;
+            Section = section;
+        }
+    }
+
+    public enum NavSection
+    {
+        None,
+        Dashboard,
+        Account,
+        GameProfile,
+        Tests,
+        Shop,
+        Support
+    }
+
+    public class ButtonActiveStyle
+    {
+        public static readonly string active = "nav-button-active-background";
+        public static readonly string normal = "nav-button-background";
+    }
+}

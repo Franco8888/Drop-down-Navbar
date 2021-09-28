@@ -1,0 +1,61 @@
+header {
+    height: 100%;
+    width: 100%;
+}
+
+nav {
+    height: 100%;
+    width: 100%; /***/
+}
+
+    nav div {
+        width: 100%;
+    }
+
+.dropdown {
+    width: 170px;
+    position: relative;
+}
+
+    .dropdown .dropbtn {
+        width: 100%;
+        padding: 8px;
+        text-align: center;
+        border: none;
+        color: white;
+        font-size: 18px;
+    }
+
+    .dropdown:hover {
+        background-color: #023a4f;
+    }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 170px;
+    top: 0px;
+    width: 170px;
+    z-index: 1;
+}
+
+    .dropdown-content button {
+        width: 100%;
+        padding: 8px;
+        text-align: center;
+        border: none;
+        color: white;
+        font-size: 18px;
+    }
+
+        button:hover {
+            background-color: #023a4f;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+
+
