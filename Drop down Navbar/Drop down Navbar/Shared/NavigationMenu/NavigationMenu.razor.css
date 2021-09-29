@@ -17,18 +17,16 @@ nav {
     position: relative;
 }
 
-    .dropdown .dropbtn {
+    .dropdown button, .dropdown-content button {
         width: 100%;
         padding: 8px;
         text-align: center;
         border: none;
         color: white;
         font-size: 18px;
+        cursor: pointer;
     }
 
-    .dropdown:hover {
-        background-color: #023a4f;
-    }
 
 .dropdown-content {
     display: none;
@@ -39,23 +37,10 @@ nav {
     z-index: 1;
 }
 
-    .dropdown-content button {
-        width: 100%;
-        padding: 8px;
-        text-align: center;
-        border: none;
-        color: white;
-        font-size: 18px;
-    }
-
-        button:hover {
-            background-color: #023a4f;
-        }
-
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-
-
-
+.dropdown-content:hover {
+    display: block;
+}

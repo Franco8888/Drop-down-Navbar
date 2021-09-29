@@ -5,9 +5,17 @@
         background-color: #38aecc;
     }
 
+        .nav-button-active-background:hover {
+            background-color: #43c4e6;
+        }
+
     .nav-button-background {
         background-color: #022F40;
     }
+
+        .nav-button-background:hover {
+            background-color: #044259;
+        }
 </style>
 
 <header>
@@ -16,7 +24,7 @@
             @foreach (var navButton in MainNavButtons)
             {
                 <div class="dropdown">
-                    <button class="dropbtn @navButton.StyleClassString" @onclick="@(() => OnButtonClicked(navButton, navButton.ButtonRoute))">@navButton.ButtonString</button>
+                    <button class="@navButton.StyleClassString" @onclick="@(() => OnButtonClicked(navButton, navButton.ButtonRoute))">@navButton.ButtonString</button>
                     <div class="dropdown-content">
                         @foreach (var button in navButton.SubSection)
                         {
@@ -27,6 +35,19 @@
             }
 
         </div>
+
+        <div>testing:</div>
+        <div style="font-size: 19px;">MainButtons</div>
+        <div>mainButtonPressed section: @in1</div>
+        <div>mainbuttonPressed buttonString: @in2</div>
+        <div>Route from main button: @in3</div>
+        <div>buttonString: @in4</div>
+        @*<div>dash: @MainNavButtons[0].StyleClassString</div>
+        <div>acc: @MainNavButtons[1].StyleClassString</div>
+        <div>GP: @MainNavButtons[2].StyleClassString</div>
+        <div>tests: @MainNavButtons[3].StyleClassString</div>
+        <div>shop: @MainNavButtons[4].StyleClassString</div>
+        <div>support: @MainNavButtons[5].StyleClassString</div>*@
     </nav>
 </header>
 
@@ -34,12 +55,12 @@
 
     List<NavButton> MainNavButtons = new()
     {
-        new NavButton("Dashboard", "/dashboard", NavDashboardSection, NavSection.Dashboard),
-        new NavButton("Account", "/account", NavAccountSection, NavSection.Account),
-        new NavButton("Gamer Profile", "/gamerprofile", NavGamerProfileSection, NavSection.GameProfile),
-        new NavButton("Tests", "/tests", NavTestSection, NavSection.Tests),
-        new NavButton("Shop", "/shop", NavShopSection, NavSection.Shop),
-        new NavButton("Support", "/support/ticekts", NavSupportSection, NavSection.Support),
+        new NavButton("Dashboard", "/dashboard", NavSection.Dashboard, NavDashboardSection),
+        new NavButton("Account", "/account", NavSection.Account, NavAccountSection),
+        new NavButton("Gamer Profile", "/gamerprofile", NavSection.GameProfile, NavGamerProfileSection),
+        new NavButton("Tests", "/tests", NavSection.Tests, NavTestSection),
+        new NavButton("Shop", "/shop", NavSection.Shop, NavShopSection),
+        new NavButton("Support", "/support/ticekts", NavSection.Support, NavSupportSection),
     };
 
     static List<NavButton> NavDashboardSection = new();
@@ -77,33 +98,74 @@
         new NavButton("FAQ", "/support/faq"),
     };
 
-    NavSection sectionActive = NavSection.Dashboard;
+    string in1 = "";
+    string in2 = "";
+    string in3 = "";
+    string in4 = "";
 
     private void OnButtonClicked(NavButton mainButtonPressed, string route, string buttonString = "")
     {
-        foreach (var mainbtn in MainNavButtons)
+        // if main button was pressed
+        in1 = mainButtonPressed.Section.ToString();
+        in2 = mainButtonPressed.ButtonString;
+        in3 = route;
+        in4 = buttonString;
+        if(buttonString == "")
         {
-            if(mainbtn.ButtonString == mainButtonPressed.ButtonString)
+            foreach (var mainbtn in MainNavButtons)
             {
-                mainbtn.StyleClassString = ButtonActiveStyle.active;
-            }
-            else
-            {
-                mainbtn.StyleClassString = ButtonActiveStyle.normal;
-            }
-
-            // Making sub button active
-            foreach (var subButton in mainbtn.SubSection)
-            {
-                if (subButton.ButtonString == buttonString)
+                if (mainbtn.Section == mainButtonPressed.Section)
                 {
-                    subButton.StyleClassString = ButtonActiveStyle.active;
+                    mainbtn.StyleClassString = ButtonActiveStyle.active;
                 }
                 else
+                {
+                    mainbtn.StyleClassString = ButtonActiveStyle.normal;
+                }
+
+                //cleanup
+                foreach (var subButton in mainbtn.SubSection)
                 {
                     subButton.StyleClassString = ButtonActiveStyle.normal;
                 }
             }
+
+            if(mainButtonPressed.SubSection.Count > 0)
+            {
+                mainButtonPressed.SubSection[0].StyleClassString = ButtonActiveStyle.active;
+            }
+
+        }
+        else
+        {
+            foreach (var mainbtn in MainNavButtons)
+            {
+                if (mainbtn.Section == mainButtonPressed.Section)
+                {
+                    mainbtn.StyleClassString = ButtonActiveStyle.active;
+                }
+                else
+                {
+                    mainbtn.StyleClassString = ButtonActiveStyle.normal;
+                }
+
+
+                foreach (var subButton in mainbtn.SubSection)
+                {
+                    if (subButton.ButtonString == buttonString)
+                    {
+                        subButton.StyleClassString = ButtonActiveStyle.active;
+                    }
+                    else
+                    {
+                        subButton.StyleClassString = ButtonActiveStyle.normal;
+                    }
+                }
+
+            }
+
+
+
         }
 
         GoToPage(route);
@@ -117,6 +179,14 @@
 
     public class NavButton
     {
+        public NavButton(string buttonString, string buttonRoute, NavSection section = NavSection.Dashboard, List<NavButton> subSection = null)
+        {
+            ButtonString = buttonString;
+            ButtonRoute = buttonRoute;
+            Section = section;
+            SubSection = subSection;
+        }
+
         public string ButtonString { get; set; }
 
         public string ButtonRoute { get; set; }
@@ -127,14 +197,23 @@
 
         public string StyleClassString { get; set; } = ButtonActiveStyle.normal;
 
-        public NavButton(string buttonString, string buttonRoute, List<NavButton> subSection = null, NavSection section = NavSection.Dashboard)
+    }
+
+@*    public class SubNavButton
+    {
+        public SubNavButton(string buttonString, string buttonRoute, string styleClassString)
         {
             ButtonString = buttonString;
             ButtonRoute = buttonRoute;
-            SubSection = subSection;
-            Section = section;
+            StyleClassString = styleClassString;
         }
-    }
+
+        public string ButtonString { get; set; }
+
+        public string ButtonRoute { get; set; }
+
+        public string StyleClassString { get; set; } = ButtonActiveStyle.normal;
+    }*@
 
     public enum NavSection
     {
