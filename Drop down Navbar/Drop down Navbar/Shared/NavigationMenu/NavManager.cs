@@ -11,7 +11,7 @@ namespace Drop_down_Navbar.Shared.NavigationMenu
 
         static List<NavButton> NavAccountSection = new()
         {
-            new NavButton("Personel Detials", "/account/detials"),
+            new NavButton("Personel Detials", "/account/details"),
             new NavButton("Achievements", "/account/achievements"),
             new NavButton("Activity", "/account/activity"),
             new NavButton("Referrals", "/account/referrals")
@@ -36,19 +36,19 @@ namespace Drop_down_Navbar.Shared.NavigationMenu
             new NavButton("Address Book", "/shop/addressbook"),
             new NavButton("Order History", "/shop/orderhistory"),
         };
-
+        
         static List<NavButton> NavSupportSection = new()
         {
-            new NavButton("Tickets", "/support/tickets"),
+            new NavButton("Tickets", "/support/ticekts"),
             new NavButton("Legal", "/support/legal"),
             new NavButton("FAQ", "/support/faq")
         };
 
         public static List<NavButton> MainNavButtons = new()
         {
-            new NavButton("Dashboard", "/dashboard", NavSection.Dashboard, NavDashboardSection),
-            new NavButton("Account", "/account", NavSection.Account, NavAccountSection),
-            new NavButton("Gamer Profile", "/gamerprofile", NavSection.GameProfile, NavGamerProfileSection),
+            new NavButton("Dashboard", "/", NavSection.Dashboard, NavDashboardSection),
+            new NavButton("Account", "/account/details", NavSection.Account, NavAccountSection),
+            new NavButton("Gamer Profile", "/profile", NavSection.GameProfile, NavGamerProfileSection),
             new NavButton("Tests", "/tests", NavSection.Tests, NavTestSection),
             new NavButton("Shop", "/shop", NavSection.Shop, NavShopSection),
             new NavButton("Support", "/support/ticekts", NavSection.Support, NavSupportSection)

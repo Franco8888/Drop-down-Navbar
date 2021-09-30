@@ -35,36 +35,14 @@
             }
 
         </div>
-
-        <div>testing:</div>
-        <div style="font-size: 19px;">MainButtons</div>
-        <div>mainButtonPressed section: @in1</div>
-        <div>mainbuttonPressed buttonString: @in2</div>
-        <div>Route from main button: @in3</div>
-        <div>buttonString: @in4</div>
-        @*<div>dash: @MainNavButtons[0].StyleClassString</div>
-        <div>acc: @MainNavButtons[1].StyleClassString</div>
-        <div>GP: @MainNavButtons[2].StyleClassString</div>
-        <div>tests: @MainNavButtons[3].StyleClassString</div>
-        <div>shop: @MainNavButtons[4].StyleClassString</div>
-        <div>support: @MainNavButtons[5].StyleClassString</div>*@
     </nav>
 </header>
 
 @code {
 
-    string in1 = "";
-    string in2 = "";
-    string in3 = "";
-    string in4 = "";
 
     private void OnButtonClicked(NavManager.NavButton mainButtonPressed, string route, string buttonString = "")
     {
-        // if main button was pressed
-        in1 = mainButtonPressed.Section.ToString();
-        in2 = mainButtonPressed.ButtonString;
-        in3 = route;
-        in4 = buttonString;
         if(buttonString == "")
         {
             foreach (var mainbtn in NavManager.MainNavButtons)
